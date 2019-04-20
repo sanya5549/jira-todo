@@ -1,0 +1,7 @@
+.card {
+    margin:1em
+}
+.segment{
+    height:35em;
+    overflow-y: scroll;   
+}
