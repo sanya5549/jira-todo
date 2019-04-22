@@ -15,14 +15,74 @@ const rootReducer = (state=initialState, action) => {
 
     // checking for the type of action chosen by the user. The user can perform three types of actions i.e add a //
     switch(action.type) {      
-        // add a new card, edit the previous card and delete the card//                
+        // add a new card, edit the previous card and delete the card//        
         case ADD_NEW_CARD: {
             const card = action.payload;
-            return {
-                ...state,
-                all: [...state.all, card]
+            if(card.columnName === 'All'){
+                return {
+                    ...state,
+                    all: [...state.all, card]
+                }   
+            }else if(card.columnName === 'In Progress'){
+                return {
+                    ...state,
+                    inProgress: [...state.all, card]
+                }   
+            }else if(card.columnName === 'ToDo'){
+                return {
+                    ...state,
+                    todo: [...state.all, card]
+                }   
+            }else if(card.columnName === 'Done'){
+                return {
+                    ...state,
+                    done: [...state.all, card]
+                }   
             }
-        }
+        }    
+        break;      
+        // case ADD_NEW_CARD: {
+        //     const card = action.payload;
+        //     let idx = state.all.findIndex(o => o.id == card.id)
+        //     if (idx === -1){
+        //         idx = state.inProgress.findIndex(o => o.id === card.id)
+
+        //         if(idx === -1){
+        //             idx = state.todo.findIndex(o => o.id === card.id)
+
+        //             if(idx === -1){
+        //                 idx = state.done.findIndex(o => o.id === card.id)
+
+        //                 if(idx === -1){
+
+        //                     return {...state};
+        //                 }
+        //                 state.done[idx] = {...card}
+        //                 return {
+        //                     ...state,
+        //                     done: [...state.done, card]
+        //                 }
+        //             }
+
+        //             state.todo[idx] = {...card}
+        //             return{
+        //                 ...state,
+        //                 todo: [...state.todo, card]
+        //             }
+        //         }
+
+        //         state.inProgress[idx] = {...card}
+        //         return{
+        //             ...state,
+        //             inProgress: [...state.inProgress, card]
+        //         }
+        //     }
+        //     state.all[idx] = {...card}
+        //     return {
+        //         ...state,
+        //         all: [...state.all, card]
+        //     }
+        // }
 
         /* remove the card present in either of the four columns and restore the rest of the cards*/
         case REMOVE_CARD: {                                                  

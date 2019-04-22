@@ -119,6 +119,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      columnName:"",
       addModal: {
         open: false
       },
@@ -130,17 +131,19 @@ class App extends Component {
   }
 
   //function to handle add card click
-  handleAddCardClick = (e) => {
-    e.preventDefault();
+  handleAddCardClick = (colName) => {
+    // e.preventDefault();
     this.setState({
       ...this.state,
+      columnName: colName,
       addModal: {open: true}
     })
   }
 
   //function to handle add card submit
   handleAddCardSubmit = (card) => {
-    card.id = uuid4()
+    card.id = uuid4();
+    card.columnName = this.state.columnName;
     card.date = new Date().toJSON().slice(0, 10);
     this.props.addCard(card);
     this.setState({
@@ -201,17 +204,20 @@ class App extends Component {
           <Grid columns="equal">
             <Grid.Row>
               <Grid.Column>
-                <GridColumn title="All" addable={true} handleAddCardClick={this.handleAddCardClick} handleEditClick={this.handleEditClick}
+                <GridColumn title="All" addable={true} handleAddCardClick={() => this.handleAddCardClick("All")} handleEditClick={this.handleEditClick}
                   handleRemoveCard={this.handleRemoveCard} cards={[...this.props.all]}/>
               </Grid.Column>
               <Grid.Column>
-                <GridColumn title="ToDo" addable={false} handleRemoveCard={this.handleRemoveCard} handleEditClick={this.handleEditClick} cards={[...this.props.todo]}/>
+                <GridColumn title="ToDo" addable={true} handleAddCardClick={() => this.handleAddCardClick("ToDo")} handleRemoveCard={this.handleRemoveCard} 
+                handleEditClick={this.handleEditClick} cards={[...this.props.todo]}/>
               </Grid.Column>
               <Grid.Column>
-                <GridColumn title="In Progress" addable={false} handleRemoveCard={this.handleRemoveCard} handleEditClick={this.handleEditClick} cards={[...this.props.inProgress]}/>
+                <GridColumn title="In Progress" addable={true} handleAddCardClick={() => this.handleAddCardClick("In Progress")} handleRemoveCard={this.handleRemoveCard}
+                 handleEditClick={this.handleEditClick} cards={[...this.props.inProgress]}/>
               </Grid.Column>
               <Grid.Column>
-                <GridColumn title="Done" addable={false} handleRemoveCard={this.handleRemoveCard} handleEditClick={this.handleEditClick} cards={[...this.props.done]}/>
+                <GridColumn title="Done" addable={true} handleAddCardClick={() => this.handleAddCardClick("Done")} handleRemoveCard={this.handleRemoveCard} 
+                handleEditClick={this.handleEditClick} cards={[...this.props.done]}/>
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -235,7 +241,7 @@ const mapStateToProps = (state) => {
 // connecting reducer to react
 //dispatching action
 const mapDispatchToProps = (dispatch) => ({
-  addCard: (card) => dispatch(addCardAction(card)),
+  addCard: (card,id) => dispatch(addCardAction(card)),
   removeCard: (cardId) => dispatch(removeCardAction(cardId)),
   editCard: (card) => dispatch(editClickAction(card))
 })
