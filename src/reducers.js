@@ -26,64 +26,21 @@ const rootReducer = (state=initialState, action) => {
             }else if(card.columnName === 'In Progress'){
                 return {
                     ...state,
-                    inProgress: [...state.all, card]
+                    inProgress: [...state.inProgress, card]
                 }   
             }else if(card.columnName === 'ToDo'){
                 return {
                     ...state,
-                    todo: [...state.all, card]
+                    todo: [...state.todo, card]
                 }   
             }else if(card.columnName === 'Done'){
                 return {
                     ...state,
-                    done: [...state.all, card]
+                    done: [...state.done, card]
                 }   
             }
         }    
-        break;      
-        // case ADD_NEW_CARD: {
-        //     const card = action.payload;
-        //     let idx = state.all.findIndex(o => o.id == card.id)
-        //     if (idx === -1){
-        //         idx = state.inProgress.findIndex(o => o.id === card.id)
-
-        //         if(idx === -1){
-        //             idx = state.todo.findIndex(o => o.id === card.id)
-
-        //             if(idx === -1){
-        //                 idx = state.done.findIndex(o => o.id === card.id)
-
-        //                 if(idx === -1){
-
-        //                     return {...state};
-        //                 }
-        //                 state.done[idx] = {...card}
-        //                 return {
-        //                     ...state,
-        //                     done: [...state.done, card]
-        //                 }
-        //             }
-
-        //             state.todo[idx] = {...card}
-        //             return{
-        //                 ...state,
-        //                 todo: [...state.todo, card]
-        //             }
-        //         }
-
-        //         state.inProgress[idx] = {...card}
-        //         return{
-        //             ...state,
-        //             inProgress: [...state.inProgress, card]
-        //         }
-        //     }
-        //     state.all[idx] = {...card}
-        //     return {
-        //         ...state,
-        //         all: [...state.all, card]
-        //     }
-        // }
-
+        
         /* remove the card present in either of the four columns and restore the rest of the cards*/
         case REMOVE_CARD: {                                                  
             const id = action.payload                                        
